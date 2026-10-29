@@ -32,13 +32,10 @@ export function nightsOnDisk(runsDir: string): string[] {
   }
 }
 
-// The board must still render when a night cannot be read, so any failure becomes `null`.
+// Bad lines are counted, never thrown, and a missing file is `null`; any other read error
+// is real and surfaces.
 export function nightCounts(runsDir: string, night: string): NightCounts | null {
-  try {
-    return readNight(runsDir, night)?.counts ?? null;
-  } catch {
-    return null;
-  }
+  return readNight(runsDir, night)?.counts ?? null;
 }
 
 export function readStatus(config: RigConfig): Status {

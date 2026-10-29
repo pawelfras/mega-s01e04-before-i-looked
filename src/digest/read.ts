@@ -9,7 +9,7 @@ function isStatus(value: unknown): value is JobStatus {
 }
 
 /** Parses one log line; `null` when it isn't JSON or doesn't have the `RunLine` shape. */
-export function parseLine(text: string): RunLine | null {
+function parseLine(text: string): RunLine | null {
   let value: unknown
   try {
     value = JSON.parse(text)
