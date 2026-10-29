@@ -14,12 +14,26 @@ in a shell this agent can run.
 2. Draft the split as a table: title · plan section · scope · done when · blocked by.
    One issue per unit of work.
 3. **Stop and show the table to the human.** Publish nothing until they approve it.
-4. Ask the human what every issue here must carry (fields, labels, wording), unless it is
-   already written down in this session or in the repo.
+4. Every issue carries this shape (approved by the human, 2026-10-29). Ask before changing it.
+
+   ```md
+   Source: plan.md § <n>
+
+   ## Scope
+   <what to change, where>
+   ## Done when
+   <the plan's check, word for word>
+   ## Blocked by
+   #n, or —
+   ```
+
+   Label: `plan:<plan>` (the `plan:` value in plan.md's frontmatter). A step that waits on
+   someone outside the lane (a reviewer) gets its own issue, done when they confirm, and it
+   blocks the clean-up issue.
 5. Create each issue in dependency order, so blocked-by can cite real numbers:
 
    ```sh
-   gh issue create --title "<title>" --body-file <tmp.md>
+   gh issue create --title "<title>" --body-file <tmp.md> --label "plan:<plan>"
    ```
 
 6. Record every issue URL from gh's output (not from memory) and reply with the list.
