@@ -1,4 +1,21 @@
-import type { Status } from '../status.js';
+import type { NightEntry, Status } from '../status.js';
+
+function count(value: number | undefined): string {
+  return value === undefined ? '—' : String(value);
+}
+
+function NightRow({ entry }: { entry: NightEntry }) {
+  const c = entry.counts;
+  return (
+    <li>
+      <a href={`/digest/${entry.night}`}>{entry.night}</a>
+      {' '}
+      <span class="mute">
+        ok {count(c?.ok)} · retry {count(c?.retry)} · fail {count(c?.fail)}
+      </span>
+    </li>
+  );
+}
 
 export function StatusBoard({ status }: { status: Status }) {
   return (
@@ -19,8 +36,8 @@ export function StatusBoard({ status }: { status: Status }) {
         <p class="mute">nothing in runs/</p>
       ) : (
         <ul>
-          {status.nights.map((n) => (
-            <li>{n}</li>
+          {status.nights.map((entry) => (
+            <NightRow entry={entry} />
           ))}
         </ul>
       )}
